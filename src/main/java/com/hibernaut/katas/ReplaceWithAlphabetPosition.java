@@ -11,41 +11,31 @@ package com.hibernaut.katas;
 public class ReplaceWithAlphabetPosition {
     static String stringToNumbers(String inputString) {
 
-        int count = 0;
-
-        //Использовать StringBuffer
-        char[] inputCharArray = inputString.toLowerCase().toCharArray();
+        StringBuffer inString = new StringBuffer(inputString.toLowerCase());
+        StringBuffer interString = new StringBuffer("");
+        StringBuffer outString = new StringBuffer("");
 
         char[] keyLetterArray = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-
         String[] keyNumberArray = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
                 "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26"};
 
-        for (char c : inputCharArray) {
-            for (char k : keyLetterArray) {
-                if (c == k) {
-                    count++;
+        for (int i = 0; i < inString.length(); i++) {
+            for (int j = 0; j < keyLetterArray.length; j++) {
+                if (inString.charAt(i) == keyLetterArray[j]) {
+                    interString.append(inString.charAt(i));
                 }
             }
         }
 
-        String[] outputArray = new String[count];
-
-
-        for (int i = 0; i < outputArray.length; i++) {
-            for (int j = 0; j < inputCharArray.length; j++) {
-                for (int y = 0; y < keyLetterArray.length; y++) {
-                    if (inputCharArray[j] == keyLetterArray[y]) {
-                        outputArray[i] = keyNumberArray[j];
-                    }
+        for (int i = 0; i < interString.length(); i++) {
+            for (int j = 0; j < keyLetterArray.length; j++) {
+                if (interString.charAt(i) == keyLetterArray[j]) {
+                    outString.append(keyNumberArray[j] + " ");
                 }
             }
         }
 
-
-        String outputString = String.join(" ", outputArray);
-
-        return outputString;
+        return new String(outString);
     }
 }
