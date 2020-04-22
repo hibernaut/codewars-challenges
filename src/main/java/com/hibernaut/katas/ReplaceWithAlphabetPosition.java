@@ -11,8 +11,7 @@ package com.hibernaut.katas;
 public class ReplaceWithAlphabetPosition {
     static String stringToNumbers(String inputString) {
 
-        StringBuffer inString = new StringBuffer(inputString.toLowerCase());
-        StringBuffer interString = new StringBuffer("");
+        String inString = new String(inputString.toLowerCase());
         StringBuffer outString = new StringBuffer("");
 
         char[] keyLetterArray = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
@@ -23,19 +22,11 @@ public class ReplaceWithAlphabetPosition {
         for (int i = 0; i < inString.length(); i++) {
             for (int j = 0; j < keyLetterArray.length; j++) {
                 if (inString.charAt(i) == keyLetterArray[j]) {
-                    interString.append(inString.charAt(i));
-                }
-            }
-        }
-
-        for (int i = 0; i < interString.length(); i++) {
-            for (int j = 0; j < keyLetterArray.length; j++) {
-                if (interString.charAt(i) == keyLetterArray[j]) {
                     outString.append(keyNumberArray[j] + " ");
                 }
             }
         }
 
-        return new String(outString);
+        return new String(outString).trim();
     }
 }
