@@ -30,9 +30,11 @@ public class SimpleEncryptionAlternatingSplit {
                 for (int j = 1; j < string.length(); j += 2) {
                     buffer.append(string.charAt(j));
                 }
+
                 for (int j = 0; j < string.length(); j += 2) {
                     buffer.append(string.charAt(j));
                 }
+
                 string = buffer.toString();
                 buffer = new StringBuffer("");
             }
@@ -51,6 +53,7 @@ public class SimpleEncryptionAlternatingSplit {
                     buffer.append(string.charAt(string.length() / 2 + j));
                     buffer.append(string.charAt(j));
                 }
+
                 if (string.length() % 2 != 0) {
                     buffer.append(string.charAt(string.length() - 1));
                 }
