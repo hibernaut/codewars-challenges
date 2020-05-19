@@ -26,12 +26,12 @@ import java.util.Collections;
  */
 
 public class TwiceLinear {
-    public static int dblLinear (int n) {
-        ArrayList<Integer> sequence = new ArrayList();
+    public static int dblLinear(int n) {
         int elementId = 0;
         int initialElement;
         int secondElement;
         int thirdElement;
+        ArrayList<Integer> sequence = new ArrayList();
 
         //Initializing starting element
         sequence.add(elementId, 1);
@@ -58,7 +58,7 @@ public class TwiceLinear {
             //Sorting the sequence
             Collections.sort(sequence);
         }
-        
+
         return sequence.get(elementId);
     }
 }
