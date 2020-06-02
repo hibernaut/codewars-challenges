@@ -1,7 +1,6 @@
 package com.hibernaut.katas;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Consider a sequence u where u is defined as follows:
@@ -27,38 +26,31 @@ import java.util.Collections;
 
 public class TwiceLinear {
     public static int dblLinear(int n) {
-        int elementId = 0;
-        int initialElement;
-        int secondElement;
-        int thirdElement;
+        int x = 0;
+        int y = 0;
+        int nextX;
+        int nextY;
+
         ArrayList<Integer> sequence = new ArrayList();
 
-        //Initializing starting element
-        sequence.add(elementId, 1);
+        sequence.add(0, 1);
 
-        while (elementId < n) {
-            //Putting current element into variable container
-            initialElement = sequence.get(elementId);
+        for (int i = 0; i < n; i++) {
+            nextX = 2 * sequence.get(x) + 1;
+            nextY = 3 * sequence.get(y) + 1;
 
-            //Calculating second element and if it does not repeat, adding to sequence
-            secondElement = 2 * initialElement + 1;
-            if (!sequence.contains(secondElement)) {
-                sequence.add(secondElement);
+            if (nextX <= nextY) {
+                sequence.add(nextX);
+                x++;
+                if (nextX == nextY) {
+                    y++;
+                }
+            } else {
+                sequence.add(nextY);
+                y++;
             }
-
-            //Calculating third element and if it does not repeat, adding to sequence
-            thirdElement = 3 * initialElement + 1;
-            if (!sequence.contains(thirdElement)) {
-                sequence.add(thirdElement);
-            }
-
-            //Increasing element ID
-            elementId++;
-
-            //Sorting the sequence
-            Collections.sort(sequence);
         }
 
-        return sequence.get(elementId);
+        return sequence.get(n);
     }
 }
