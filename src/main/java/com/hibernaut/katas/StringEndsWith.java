@@ -14,5 +14,4 @@ public class StringEndsWith {
     public static boolean isEnding(String str, String ending) {
         return str.endsWith(ending);
     }
-
 }
