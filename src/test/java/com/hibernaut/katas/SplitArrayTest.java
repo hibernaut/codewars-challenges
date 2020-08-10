@@ -49,5 +49,10 @@ public class SplitArrayTest {
 
         assertEquals(Arrays.toString(expected),Arrays.toString(input));
 
+        expected = new int[]{1};
+        input = SplitArray.splitAndAdd(new int[]{1},0);
+
+        assertEquals(Arrays.toString(expected),Arrays.toString(input));
+
     }
 }
