@@ -55,16 +55,8 @@ public class ApplyOffsetToSubtitles {
         startTime = splittedArray[0].split("[:\\,]");
         stopTime = splittedArray[2].split("[:\\,]");
 
-
-        commonStartTime = (((Integer.parseInt(startTime[0]) * 60 +
-                Integer.parseInt(startTime[1])) * 60 +
-                Integer.parseInt(startTime[2])) * 1000 +
-                Integer.parseInt(startTime[3])) + offset;
-
-        commonStopTime = (((Integer.parseInt(stopTime[0]) * 60 +
-                Integer.parseInt(stopTime[1])) * 60 +
-                Integer.parseInt(stopTime[2])) * 1000 +
-                Integer.parseInt(stopTime[3])) + offset;
+        commonStartTime = calcCommonTime(startTime, offset);
+        commonStopTime = calcCommonTime(stopTime, offset);
 
         if (commonStartTime < 0 || commonStopTime > offsetLimit) {
             return "Invalid offset";
@@ -77,25 +69,20 @@ public class ApplyOffsetToSubtitles {
             }
 
             timeFormat = commonStartTime % s;
-
             if (i == startTime.length - 1) {
                 startTime[i] = String.format("%03d", timeFormat);
             } else {
                 startTime[i] = String.format("%02d", timeFormat);
             }
-
             commonStartTime /= s;
 
             timeFormat = commonStopTime % s;
-
             if (i == startTime.length - 1) {
                 stopTime[i] = String.format("%03d", timeFormat);
             } else {
                 stopTime[i] = String.format("%02d", timeFormat);
             }
-
             commonStopTime /= s;
-
         }
 
         startTime[0] = String.format("%02d", commonStartTime);
@@ -115,7 +102,10 @@ public class ApplyOffsetToSubtitles {
         return result;
     }
 
-    public static void main(String[] args) {
-        System.out.println(subsOffsetApply("01:00:00,000 --> 01:00:02,000 Let`s finish this.", 356397999));
+    public static int calcCommonTime(String[] array, int offset) {
+        return (((Integer.parseInt(array[0]) * 60 +
+                Integer.parseInt(array[1])) * 60 +
+                Integer.parseInt(array[2])) * 1000 +
+                Integer.parseInt(array[3])) + offset;
     }
 }
