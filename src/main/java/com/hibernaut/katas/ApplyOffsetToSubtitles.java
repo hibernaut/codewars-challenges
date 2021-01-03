@@ -1,8 +1,5 @@
 package com.hibernaut.katas;
 
-import java.util.Arrays;
-
-import static java.lang.Math.*;
 
 /**
  * You are given a line from a movie subtitle file as a string.
@@ -45,67 +42,47 @@ public class ApplyOffsetToSubtitles {
         int offsetLimit = 359999999;
         int commonStartTime;
         int commonStopTime;
-        int timeFormat;
         String[] splittedArray;
         String[] startTime;
         String[] stopTime;
-        String result;
 
-        splittedArray = subtitle.split("[\\s]");
-        startTime = splittedArray[0].split("[:\\,]");
-        stopTime = splittedArray[2].split("[:\\,]");
+        // Split array into start time and stop time
+        splittedArray = subtitle.split("\\s");
+        startTime = splittedArray[0].split("[:,]");
+        stopTime = splittedArray[2].split("[:,]");
 
+        // Calculate common time with offset in milliseconds
         commonStartTime = calcCommonTime(startTime, offset);
         commonStopTime = calcCommonTime(stopTime, offset);
 
+        // Check if the values are correct
         if (commonStartTime < 0 || commonStopTime > offsetLimit) {
             return "Invalid offset";
         }
 
-        for (int i = startTime.length - 1; i >= 1; i--) {
-            int s = 1000;
-            if (i != startTime.length - 1) {
-                s = 60;
-            }
+        // Convert time into required format
+        splittedArray[0] = convertMilliseconds(commonStartTime);
+        splittedArray[2] = convertMilliseconds(commonStopTime);
 
-            timeFormat = commonStartTime % s;
-            if (i == startTime.length - 1) {
-                startTime[i] = String.format("%03d", timeFormat);
-            } else {
-                startTime[i] = String.format("%02d", timeFormat);
-            }
-            commonStartTime /= s;
 
-            timeFormat = commonStopTime % s;
-            if (i == startTime.length - 1) {
-                stopTime[i] = String.format("%03d", timeFormat);
-            } else {
-                stopTime[i] = String.format("%02d", timeFormat);
-            }
-            commonStopTime /= s;
-        }
-
-        startTime[0] = String.format("%02d", commonStartTime);
-        stopTime[0] = String.format("%02d", commonStopTime);
-
-        result = startTime[0] + ":" + startTime[1] + ":" + startTime[2] + "," + startTime[3] + " --> " +
-                stopTime[0] + ":" + stopTime[1] + ":" + stopTime[2] + "," + stopTime[3] + " ";
-
-        for (int i = 3; i < splittedArray.length; i++) {
-            if (i < splittedArray.length - 1) {
-                result += splittedArray[i] + " ";
-            } else {
-                result += splittedArray[i];
-            }
-        }
-
-        return result;
+        return String.join(" ", splittedArray);
     }
 
+    // Function which calculates common time with offset in milliseconds
     public static int calcCommonTime(String[] array, int offset) {
         return (((Integer.parseInt(array[0]) * 60 +
                 Integer.parseInt(array[1])) * 60 +
                 Integer.parseInt(array[2])) * 1000 +
                 Integer.parseInt(array[3])) + offset;
+    }
+
+    // Function which convert time in milliseconds into format "hh:mm:ss:msmsms"
+    public static String convertMilliseconds(int time) {
+        int h = time / 3600000;
+        int m = (time - h * 3600000) / 60000;
+        int s = (time - (h * 3600000 + m * 60000)) / 1000;
+        int ms = time - (h * 3600000 + m * 60000 + s * 1000);
+
+        return String.format("%02d:%02d:%02d,%03d", h, m, s, ms);
     }
 }
