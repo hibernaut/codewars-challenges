@@ -65,11 +65,4 @@ public class SimpleEncryptionAlternatingSplit {
 
         return string;
     }
-
-    public static void main(String[] args) {
-        String encryption = encrypt(null, 0);
-        String decryption = decrypt(encryption, 1);
-        System.out.println(encryption);
-        System.out.println(decryption);
-    }
 }
