@@ -23,8 +23,8 @@ import java.util.Collections;
  * nextSmaller(135) == -1
  * nextSmaller(1027) == -1 // 0721 is out since we don't write numbers with leading zeros
  *
- *     some tests will include very large numbers.
- *     test data only employs positive integers.
+ * some tests will include very large numbers.
+ * test data only employs positive integers.
  */
 
 public class NextSmallerNumber {
@@ -35,20 +35,24 @@ public class NextSmallerNumber {
 
         String[] number = Long.toString(n).split("");
 
-        int[] digitsArray = Arrays.stream(number).mapToInt(Integer::parseInt).toArray();
+        int[] digitsArray = Arrays.stream(number)
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
         for (int i = digitsArray.length - 2; i >= 0; i--) {
             if(swapWithNearestSmallestDigit(digitsArray, i)) {
-                System.out.println(Arrays.toString(digitsArray));
+                Integer[] tempDigitsArray = Arrays.stream(digitsArray)
+                        .boxed()
+                        .toArray(Integer[]::new);
 
-                Integer[] tempDigitsArray = Arrays.stream(digitsArray).boxed().toArray(Integer[]::new);
                 Arrays.sort(tempDigitsArray, i + 1, digitsArray.length, Collections.reverseOrder());
-                digitsArray = Arrays.stream(tempDigitsArray).mapToInt(Integer::intValue).toArray();
+
+                digitsArray = Arrays.stream(tempDigitsArray)
+                        .mapToInt(Integer::intValue)
+                        .toArray();
                 break;
             }
         }
-
-        System.out.println(Arrays.toString(digitsArray));
 
         long nearestSmallestNumber = Long.parseLong(Arrays.stream(digitsArray)
                 .mapToObj(String::valueOf)
