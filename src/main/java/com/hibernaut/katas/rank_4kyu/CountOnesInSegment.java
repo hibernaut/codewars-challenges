@@ -22,13 +22,15 @@ import static java.math.BigInteger.ZERO;
 
 public class CountOnesInSegment {
     public static BigInteger countOnes(long left, long right) {
-        return count(right).subtract(count(left-1));
+        return count(right).subtract(count(left - 1));
     }
 
     private static BigInteger count(long b) {
         if(b == 0L) return ZERO;
         int l = (int) (Math.log(b) / Math.log(2));
         long p = 1L << l;
-        return valueOf(l).multiply(valueOf(p/2)).add(valueOf(1+b-p)).add(count(b-p));
+        return valueOf(l).multiply(valueOf(p / 2))
+                .add(valueOf(1 + b - p))
+                .add(count(b - p));
     }
 }
