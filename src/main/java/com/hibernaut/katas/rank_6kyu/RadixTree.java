@@ -9,7 +9,7 @@ import java.util.Map;
  * in which each node that is the only child is merged with its parent
  * [unless a word from the input ends there]) from a given list of words using dictionaries
  * (aka hash maps or hash tables) where:
- *
+ * <p>
  * The dictionary keys are the nodes.
  * Leaf nodes are empty dictionaries.
  * The value for empty input is an empty dictionary.
@@ -48,7 +48,7 @@ public class RadixTree<K, V> {
     }
 
     private static void checkAndAdd(Map<String, Object> root, String word) {
-        if(root.size() == 0 && word.length() > 0) {
+        if (root.size() == 0 && word.length() > 0) {
             root.put(word, new HashMap<String, Object>());
             return;
         }
@@ -58,12 +58,12 @@ public class RadixTree<K, V> {
         String keyString = null;
         Map<String, Object> temp = null;
 
-        for (String key : root.keySet() ) {
+        for (String key : root.keySet()) {
             minLength = Math.min(key.length(), word.length());
 
             // Finding common string
             for (int i = 0; i < minLength; i++) {
-                if(key.charAt(i) == word.charAt(i)) {
+                if (key.charAt(i) == word.charAt(i)) {
                     common.append(word.charAt(i));
                 } else {
                     break;
@@ -71,14 +71,14 @@ public class RadixTree<K, V> {
             }
 
             // The word and the key have common starting substring which is shorter both of them
-            if(common.length() < minLength && common.length() > 0) {
+            if (common.length() < minLength && common.length() > 0) {
                 keyString = key;
                 temp = (Map<String, Object>) root.get(key);
                 break;
             }
 
             // The word starts with the key string
-            else if(word.startsWith(key) && key.length() < word.length()) {
+            else if (word.startsWith(key) && key.length() < word.length()) {
                 checkAndAdd((Map<String, Object>) root.get(key), word.substring(key.length()));
                 return;
             }
@@ -101,7 +101,7 @@ public class RadixTree<K, V> {
         }
 
         // The word doesn't have any match with any key
-        else if(word.length() > 0) {
+        else if (word.length() > 0) {
             root.put(word, new HashMap<String, Object>());
         }
     }
